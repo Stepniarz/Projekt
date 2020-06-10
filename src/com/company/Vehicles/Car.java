@@ -1,8 +1,9 @@
 package com.company.Vehicles;
 
 
+import com.company.RandomNumberGenerator;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -13,12 +14,12 @@ public class Car{
     public double mileage;
     public String color;
     public String segment;
+    public Random RANDOM;
     public List<brokenPart> brokenPartsList = new ArrayList<>();
     //Enums
     private static final brokenPart[] BROKEN_PARTS = brokenPart.values();
     private static final carProducer[] CAR_PRODUCER = carProducer.values();
     private static final carColor[] CAR_COLOR = carColor.values();
-    private static final int PARTS_AMOUNT = BROKEN_PARTS.length;
     private static final int PRODUCERS_AMOUNT = CAR_PRODUCER.length;
     private static final int COLORS_AMOUNT = CAR_COLOR.length;
 
@@ -74,7 +75,7 @@ public class Car{
 
     private List<brokenPart> getRandomParts() {
             List<brokenPart> listToReturn = new ArrayList<>();
-            int numberOfBrokenParts = numberCheck(0.35);
+            int numberOfBrokenParts = RandomNumberGenerator.numberCheck(0.60);
             Random rand = new Random();
             for (int i = 0;i < numberOfBrokenParts ;i++){
                 brokenPart partToAdd = brokenPart.values()[rand.nextInt(5)];
@@ -90,16 +91,6 @@ public class Car{
 //        return CAR_COLOR[RANDOM.nextInt((COLORS_AMOUNT))];
 //    }
 
-    private int numberCheck(double possibilty) {
-        int numberOfParts = -1;
-        double chance;
-        do{
-            chance = Math.random();
-            numberOfParts++;
-        }
-        while(chance < possibilty);
-        return numberOfParts;
-    }
     }
 
 
