@@ -1,20 +1,23 @@
 package com.company.Vehicles;
 
 
+import com.company.Enums.brokenPart;
+import com.company.Enums.carColor;
+import com.company.Enums.carProducer;
+import com.company.Enums.carSegment;
 import com.company.RandomNumberGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Car{
-    public double value;
-    public String producer;
+public class Car extends RandomNumberGenerator{
+    public carProducer producer;
     public String model;
     public double mileage;
-    public String color;
-    public String segment;
-    public Random RANDOM;
+    public carColor color;
+    public carSegment segment;
+    public double value;
     public List<brokenPart> brokenPartsList = new ArrayList<>();
     //Enums
     private static final brokenPart[] BROKEN_PARTS = brokenPart.values();
@@ -22,57 +25,18 @@ public class Car{
     private static final carColor[] CAR_COLOR = carColor.values();
     private static final int PRODUCERS_AMOUNT = CAR_PRODUCER.length;
     private static final int COLORS_AMOUNT = CAR_COLOR.length;
+    
 
-
-
-
-
-    public Car(String producer, String model, double value, double mileage, String color, String segment){
+    public Car(carProducer producer, String model,double mileage, carColor color,carSegment segment){
         this.producer = producer;
         this.model = model;
-        this.value = value;
+        this.segment = segment;
+        this.value = assignCarValue(segment);
         this.mileage = mileage;
         this.color = color;
-        this.segment = segment;
         this.brokenPartsList = getRandomParts();
 
     }
-    //Broken parts of the vehicle
-    public enum brokenPart{
-        BREAKS(1),
-        SUSPENSION(2),
-        ENGINE(3),
-        BODY(4),
-        TRANSMISSION(5);
-
-        int value;
-        brokenPart(int i) {
-            this.value = i;
-        }
-        public int getBrokenPartIndex(){
-            return this.value;
-        }
-    }
-    public enum carProducer{
-        VOLVO,
-        OPEL,
-        FIAT,
-        TOYOTA,
-        RENO
-    }
-    public enum carColor{
-        WHITE,
-        BLACK,
-        BLUE,
-        YELLOW,
-        GREEN,
-        SILVER,
-        BROWN,
-        RED,
-        PINK,
-        PURPLE,
-    }
-
     private List<brokenPart> getRandomParts() {
             List<brokenPart> listToReturn = new ArrayList<>();
             int numberOfBrokenParts = RandomNumberGenerator.numberCheck(0.60);
@@ -84,7 +48,34 @@ public class Car{
             }
             return listToReturn;
         }
-//    private carProducer getRandomProducer () {
+
+        private double assignCarValue(carSegment carSegment){
+        switch (carSegment){
+            case PREMIUM:
+                return getRandomValue(10000,25000);
+            case STANDARD:
+                return getRandomValue(5000, 9999);
+            case BUDGET:
+                return getRandomValue(800, 4999);
+            default:
+                throw new IllegalStateException("Unexpected value: " + carSegment);
+        }
+
+        }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "producer=" + producer +
+                ", model='" + model + '\'' +
+                ", mileage=" + mileage +
+                ", color=" + color +
+                ", segment=" + segment +
+                ", value=" + value +
+                ", brokenPartsList=" + brokenPartsList +
+                '}';
+    }
+    //    private carProducer getRandomProducer () {
 //        return CAR_PRODUCER[RANDOM.nextInt((PRODUCERS_AMOUNT))];
 //    }
 //    private carColor getRandomColor () {

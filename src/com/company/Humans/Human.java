@@ -10,8 +10,4 @@ public class Human {
         this.lastName = lastName;
         this.cash = cash;
     }
-    Human Janusz = new Human("Janusz","Nowak",3000.0);
-    Human Marian = new Human("Marian","Kowalski",2500.0);
-    Human Adrian = new Human("Adrian","Kowonowak",150.0);
-
 }
