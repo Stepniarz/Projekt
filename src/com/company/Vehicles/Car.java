@@ -37,7 +37,7 @@ public class Car extends RandomNumberGenerator{
         this.brokenPartsList = getRandomParts();
 
     }
-    private List<brokenPart> getRandomParts() {
+    public List<brokenPart> getRandomParts() {
             List<brokenPart> listToReturn = new ArrayList<>();
             int numberOfBrokenParts = RandomNumberGenerator.numberCheck(0.60);
             Random rand = new Random();

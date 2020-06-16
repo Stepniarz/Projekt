@@ -5,7 +5,7 @@ public class Human {
     public String lastName;
     public double cash;
 
-    public Human(String firstName, String lastName, double cash){
+    public Human(){
         this.firstName = firstName;
         this.lastName = lastName;
         this.cash = cash;

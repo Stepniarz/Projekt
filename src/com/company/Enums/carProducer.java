@@ -5,5 +5,13 @@ public enum carProducer {
     OPEL,
     FIAT,
     TOYOTA,
-    RENO
+    RENO,
+    MERCEDES,
+    BMW,
+    DACIA,
+    AUDI,
+    SAAB,
+    PEUGEOT,
+
+
 }
