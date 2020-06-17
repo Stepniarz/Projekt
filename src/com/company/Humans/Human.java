@@ -9,5 +9,4 @@ public class Human {
         this.firstName = firstName;
         this.lastName = lastName;
         this.cash = cash;
-    }
-}
+    }}

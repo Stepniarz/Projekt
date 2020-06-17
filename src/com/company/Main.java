@@ -10,6 +10,8 @@ import com.company.Vehicles.Car;
 import java.awt.*;
 import java.util.Scanner;
 
+import static com.company.Humans.Worker.Adrian;
+
 public class Main extends RandomNumberGenerator {
 
     public static void main(String[] args) {
@@ -17,11 +19,11 @@ public class Main extends RandomNumberGenerator {
 //        System.out.println(Car.getRandomProducer());
 //        System.out.println((Car.getRandomColor()));
         Car car = new Car(carProducer.VOLVO,"s90",1000.0, carColor.BLACK, carSegment.STANDARD);
-        Worker worker = new Worker("Ja","awe",100.0,90,0);
+
 //        System.out.println(car.brokenPartsList);
 //        System.out.println(RandomNumberGenerator.finalValue);
         System.out.println(car);
-        worker.Repair(car);
+        Adrian.workerRepair(Adrian,car);
         System.out.println("Po naprawie " + car);
     }
 }

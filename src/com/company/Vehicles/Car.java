@@ -28,26 +28,16 @@ public class Car extends RandomNumberGenerator{
     
 
     public Car(carProducer producer, String model,double mileage, carColor color,carSegment segment){
-        this.producer = producer;
+        this.producer = randomProducer();
         this.model = model;
-        this.segment = segment;
+        this.segment = randomSegment();
         this.value = assignCarValue(segment);
         this.mileage = mileage;
-        this.color = color;
+        this.color = randomColor();
         this.brokenPartsList = getRandomParts();
 
     }
-    public List<brokenPart> getRandomParts() {
-            List<brokenPart> listToReturn = new ArrayList<>();
-            int numberOfBrokenParts = RandomNumberGenerator.numberCheck(0.60);
-            Random rand = new Random();
-            for (int i = 0;i < numberOfBrokenParts ;i++){
-                brokenPart partToAdd = brokenPart.values()[rand.nextInt(5)];
-                if(!listToReturn.contains(partToAdd))
-                    listToReturn.add(partToAdd);
-            }
-            return listToReturn;
-        }
+
 
         private double assignCarValue(carSegment carSegment){
         switch (carSegment){
