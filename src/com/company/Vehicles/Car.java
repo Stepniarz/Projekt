@@ -5,13 +5,17 @@ import com.company.Enums.brokenPart;
 import com.company.Enums.carColor;
 import com.company.Enums.carProducer;
 import com.company.Enums.carSegment;
+import com.company.Humans.Human;
+import com.company.Interfaces.Buyable;
+import com.company.Interfaces.Saleable;
+import com.company.Humans.CarDealer;
+import com.company.Player;
 import com.company.RandomNumberGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-public class Car extends RandomNumberGenerator{
+public class Car extends RandomNumberGenerator implements Saleable {
     public carProducer producer;
     public String model;
     public double mileage;
@@ -20,16 +24,10 @@ public class Car extends RandomNumberGenerator{
     public double value;
     public List<brokenPart> brokenPartsList = new ArrayList<>();
     //Enums
-    private static final brokenPart[] BROKEN_PARTS = brokenPart.values();
-    private static final carProducer[] CAR_PRODUCER = carProducer.values();
-    private static final carColor[] CAR_COLOR = carColor.values();
-    private static final int PRODUCERS_AMOUNT = CAR_PRODUCER.length;
-    private static final int COLORS_AMOUNT = CAR_COLOR.length;
-    
 
-    public Car(carProducer producer, String model,double mileage, carColor color,carSegment segment){
+
+    public Car( double mileage) {
         this.producer = randomProducer();
-        this.model = model;
         this.segment = randomSegment();
         this.value = assignCarValue(segment);
         this.mileage = mileage;
@@ -38,11 +36,10 @@ public class Car extends RandomNumberGenerator{
 
     }
 
-
-        private double assignCarValue(carSegment carSegment){
-        switch (carSegment){
+    private double assignCarValue(carSegment carSegment) {
+        switch (carSegment) {
             case PREMIUM:
-                return getRandomValue(10000,25000);
+                return getRandomValue(10000, 25000);
             case STANDARD:
                 return getRandomValue(5000, 9999);
             case BUDGET:
@@ -50,8 +47,7 @@ public class Car extends RandomNumberGenerator{
             default:
                 throw new IllegalStateException("Unexpected value: " + carSegment);
         }
-
-        }
+    }
 
     @Override
     public String toString() {
@@ -65,14 +61,21 @@ public class Car extends RandomNumberGenerator{
                 ", brokenPartsList=" + brokenPartsList +
                 '}';
     }
-    //    private carProducer getRandomProducer () {
-//        return CAR_PRODUCER[RANDOM.nextInt((PRODUCERS_AMOUNT))];
-//    }
-//    private carColor getRandomColor () {
-//        return CAR_COLOR[RANDOM.nextInt((COLORS_AMOUNT))];
-//    }
 
+    @Override
+    public void sell(Player seller, Human buyer, Double price) {
+        if (seller.car == this && buyer.cash >= price) {
+            seller.cash += price;
+            buyer.cash -= price;
+            seller.car = null;
+            buyer.car = this;
+        } else {
+            System.out.println("Client doesn't have enough money to afford this car or you dont own it");
+        }
     }
+
+
+}
 
 
 
