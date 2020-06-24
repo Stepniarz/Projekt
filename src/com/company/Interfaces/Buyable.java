@@ -1,9 +1,8 @@
 package com.company.Interfaces;
 
 
-import com.company.Humans.CarDealer;
-import com.company.Player;
+import com.company.Humans.Player;
 
 public interface Buyable {
-    public void buy(Player buyer, Double price,int carIndex);
+    public void buy(Player buyer, double price, int carIndex);
 }

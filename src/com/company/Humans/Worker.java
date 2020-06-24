@@ -1,6 +1,7 @@
 package com.company.Humans;
 
 import com.company.Enums.brokenPart;
+import com.company.Places.Garage;
 import com.company.RandomNumberGenerator;
 import com.company.Vehicles.Car;
 
@@ -9,17 +10,20 @@ public class Worker extends Human {
     public double repairChance;
     public double repairCost;
     boolean successfulRepair;
+    public Garage garage;
 
-    public Worker(String firstName, String lastName, double cash, double repairCost) {
-        super(firstName, lastName, cash);
+    public Worker(String firstName, double cash, double repairCost) {
+        super(cash);
+        this.firstName = firstName;
         this.repairCost = repairCost;
 
     }
 
-    public static Worker Janusz = new Worker("Janusz", "Kowalski", 5000, 1);
-    public static Worker Marian = new Worker("Marian", "Wilk", 4500, 0.9);
-    public static Worker Adrian = new Worker("Adrian", "Nowak", 3000, 0.8);
 
+    public static Worker Janusz = new Worker("Janusz",  5000, 1);
+    public static Worker Marian = new Worker("Marian",  4500, 0.9);
+    public static Worker Adrian = new Worker("Adrian",  3000, 0.8);
+//worker's chance for repair + picking Janusz for repair if failed
     public boolean workerRepairChance(Worker worker, Car car) {
         int chance = RandomNumberGenerator.getRandomValue(0, 100);
         System.out.println(chance);
@@ -66,23 +70,26 @@ public class Worker extends Human {
     }
 
     //Worker Repair
-    public void workerRepair(Worker worker, Car car) {
+    public void workerRepair(Worker worker, Car car,Player player) {
         if (car.brokenPartsList.size() > 0) {
             if (worker == Janusz) {
                 if (workerRepairChance(Janusz, car))
                     Repair(car);
+                player.garage.carsAvailableForSale.add(car);
             }
             if (worker == Marian) {
                 if (workerRepairChance(Marian, car))
                     Repair(car);
+                player.garage.carsAvailableForSale.add(car);
             } else {
                 if (workerRepairChance(Adrian, car))
                     Repair(car);
+                player.garage.carsAvailableForSale.add(car);
             }
         } else
             System.out.println("Powrót do garazu");
     }
-
+    //Repair of broken parts increasing car's value for each repaired part
     public void Repair(Car car) {
         for (int i = 0; i < car.brokenPartsList.size(); i++) {
             // TO DO LIST: chance to add, i jumps to 1, (Car car, double chance)

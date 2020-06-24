@@ -8,12 +8,14 @@ import com.company.Enums.carSegment;
 import com.company.Humans.Human;
 import com.company.Interfaces.Buyable;
 import com.company.Interfaces.Saleable;
-import com.company.Humans.CarDealer;
-import com.company.Player;
+import com.company.Humans.Player;
+import com.company.Places.Garage;
+import com.company.Places.Office;
 import com.company.RandomNumberGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.BaseStream;
 
 public class Car extends RandomNumberGenerator implements Saleable {
     public carProducer producer;
@@ -23,10 +25,11 @@ public class Car extends RandomNumberGenerator implements Saleable {
     public carSegment segment;
     public double value;
     public List<brokenPart> brokenPartsList = new ArrayList<>();
+
     //Enums
 
 
-    public Car( double mileage) {
+    public Car(double mileage) {
         this.producer = randomProducer();
         this.segment = randomSegment();
         this.value = assignCarValue(segment);
@@ -36,6 +39,7 @@ public class Car extends RandomNumberGenerator implements Saleable {
 
     }
 
+    //assigning car value based on segment
     private double assignCarValue(carSegment carSegment) {
         switch (carSegment) {
             case PREMIUM:
@@ -63,12 +67,13 @@ public class Car extends RandomNumberGenerator implements Saleable {
     }
 
     @Override
-    public void sell(Player seller, Human buyer, Double price) {
-        if (seller.car == this && buyer.cash >= price) {
+    public void sell(Player seller, Human buyer, double price, int carIndex) {
+        if (seller.garage.carsOwned.contains(this) && buyer.cash >= price) {
             seller.cash += price;
             buyer.cash -= price;
-            seller.car = null;
-            buyer.car = this;
+            Office.transactionSell(this, buyer);
+            seller.garage.carsOwned.remove(carIndex);
+
         } else {
             System.out.println("Client doesn't have enough money to afford this car or you dont own it");
         }

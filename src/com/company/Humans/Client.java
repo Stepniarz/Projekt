@@ -4,12 +4,13 @@ import com.company.Enums.brokenPart;
 import com.company.Enums.carProducer;
 import com.company.Enums.clientFirstName;
 import com.company.Enums.clientWealth;
+import com.company.Places.Garage;
 
 import java.util.*;
 
 import static com.company.RandomNumberGenerator.*;
 
-public class Client {
+public class Client extends Human {
     private final clientFirstName firstName;
 
     public double cash;
@@ -19,11 +20,12 @@ public class Client {
 
 
     public Client(clientFirstName firstName, double cash) {
+        super(cash);
         this.firstName = randomName();
         this.cash = assignClientCash(randomStatus());
     }
-
-    private double assignClientCash(clientWealth clientWealth){
+    //assigning client cash based on his wealth
+    public static double assignClientCash(clientWealth clientWealth){
         switch(clientWealth){
             case POOR:
                 return getRandomValue(1500,6500);

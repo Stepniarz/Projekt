@@ -4,6 +4,7 @@ package com.company;
 import com.company.Enums.*;
 import com.company.Humans.Client;
 import com.company.Vehicles.Car;
+import com.company.Places.Garage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class RandomNumberGenerator {
         while (chance < possibilty);
         return numberOfParts;
     }
-
+    //Picking a random value between min and max (int type)
     public static int getRandomValue(int min, int max) {
         if (min >= max) {
             throw new IllegalArgumentException(("Max value needs to be greater than minimum"));
@@ -31,39 +32,54 @@ public class RandomNumberGenerator {
             return randomValue.nextInt((max - min) + 1) + min;
         }
     }
-
+    //Random car producer
     public static carProducer randomProducer() {
         int pickRandomProducer = r.nextInt(carProducer.values().length);
         return carProducer.values()[pickRandomProducer];
     }
-
+    //Random car color
     public static carColor randomColor() {
         int pickRandomColor = r.nextInt(carColor.values().length);
         return carColor.values()[pickRandomColor];
     }
-
+    //Random client name
     public static clientFirstName randomName() {
         int pickRandomName = r.nextInt(clientFirstName.values().length);
         return clientFirstName.values()[pickRandomName];
     }
-    public static clientWealth randomStatus(){
+    //Random client(including name and wealth)
+    public static Client getRandomClient() {
+        return new Client(randomName(), Client.assignClientCash(randomStatus()));
+    }
+    //List filled with random clients
+    public static List<Client> getRandomClientList() {
+        List<Client> listToReturn = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            listToReturn.add(getRandomClient());
+        }
+        return listToReturn;
+    }
+    //Random client wealth
+    public static clientWealth randomStatus() {
         int pickRandomStatus = r.nextInt(clientWealth.values().length);
         return clientWealth.values()[pickRandomStatus];
     }
-    //Is this ok?
+
+    //Random broken part
     public static brokenPart randomBrokenPart() {
         int pickRandomPart = r.nextInt(brokenPart.values().length);
         return brokenPart.values()[pickRandomPart];
     }
-
+    //Random car segment
     public static carSegment randomSegment() {
         int pickRandomSegment = r.nextInt(carSegment.values().length);
         return carSegment.values()[pickRandomSegment];
     }
-
-    public static Car getRandomCar(){
-        return new Car(getRandomValue(0,400000));
+    //Random car with random mileage
+    public static Car getRandomCar() {
+        return new Car(getRandomValue(0, 400000));
     }
+
     //List of randomly generated cars, unavailable for player to see
     public static List<Car> getRandomCarList() {
         List<Car> listToReturn = new ArrayList<>();

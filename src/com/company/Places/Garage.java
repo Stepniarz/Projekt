@@ -1,16 +1,34 @@
 package com.company.Places;
 
 import com.company.Humans.Human;
-import com.company.Interfaces.Saleable;
-import com.company.Player;
 import com.company.Vehicles.Car;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Garage {
-public List<Car> ownedCars;
+    public List<Car> carsOwned;
+    public  List<Car> carsAvailableForSale;
+    public Garage(){
+        this.carsOwned = new ArrayList<Car>();
+        this.carsAvailableForSale = new ArrayList<Car>();
+    }
 
+    public void showCarsOwned(){
+        for(Car car : carsOwned){
+            System.out.println(car);
+        }
+    }
 
+    public void showCarsAvailableForSale() {
+        for (Car car: carsOwned) {
+            if (car.brokenPartsList.size() == 0 ) {
+                System.out.println(car);
+            } else {
+                System.out.println(car + " Needs repair before selling");
+            }
+        }
+    }
 
 
 
