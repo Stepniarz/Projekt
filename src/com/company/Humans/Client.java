@@ -12,7 +12,7 @@ import static com.company.RandomNumberGenerator.*;
 
 public class Client extends Human {
     private final clientFirstName firstName;
-
+    public List<carProducer> wantedCars;
     public double cash;
     Random r = new Random();
     private Set<carProducer> desiredProducer;
@@ -23,6 +23,7 @@ public class Client extends Human {
         super(cash);
         this.firstName = randomName();
         this.cash = assignClientCash(randomStatus());
+        wantedCars = randomWantedProducersList();
     }
     //assigning client cash based on his wealth
     public static double assignClientCash(clientWealth clientWealth){

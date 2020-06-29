@@ -1,11 +1,7 @@
 package com.company.Places;
 
-import com.company.Humans.CarDealer;
-import com.company.Humans.Client;
 import com.company.Humans.Human;
 import com.company.Humans.Player;
-import com.company.Interfaces.Buyable;
-import com.company.Interfaces.Saleable;
 import com.company.Transaction;
 import com.company.Vehicles.Car;
 

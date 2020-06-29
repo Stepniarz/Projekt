@@ -37,6 +37,16 @@ public class RandomNumberGenerator {
         int pickRandomProducer = r.nextInt(carProducer.values().length);
         return carProducer.values()[pickRandomProducer];
     }
+    public static List<carProducer> randomWantedProducersList(){
+        List<carProducer> listToReturn = new ArrayList<>();
+        for(int i = 0; i < 2; i++){
+            carProducer generatedCar = randomProducer();
+            if(!listToReturn.contains(generatedCar)){
+                listToReturn.add(generatedCar);
+            }
+        }
+        return listToReturn;
+    }
     //Random car color
     public static carColor randomColor() {
         int pickRandomColor = r.nextInt(carColor.values().length);
@@ -70,6 +80,7 @@ public class RandomNumberGenerator {
         int pickRandomPart = r.nextInt(brokenPart.values().length);
         return brokenPart.values()[pickRandomPart];
     }
+
     //Random car segment
     public static carSegment randomSegment() {
         int pickRandomSegment = r.nextInt(carSegment.values().length);

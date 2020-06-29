@@ -6,16 +6,13 @@ import com.company.Enums.carColor;
 import com.company.Enums.carProducer;
 import com.company.Enums.carSegment;
 import com.company.Humans.Human;
-import com.company.Interfaces.Buyable;
 import com.company.Interfaces.Saleable;
 import com.company.Humans.Player;
-import com.company.Places.Garage;
 import com.company.Places.Office;
 import com.company.RandomNumberGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.BaseStream;
 
 public class Car extends RandomNumberGenerator implements Saleable {
     public carProducer producer;
@@ -57,7 +54,6 @@ public class Car extends RandomNumberGenerator implements Saleable {
     public String toString() {
         return "Car{" +
                 "producer=" + producer +
-                ", model='" + model + '\'' +
                 ", mileage=" + mileage +
                 ", color=" + color +
                 ", segment=" + segment +

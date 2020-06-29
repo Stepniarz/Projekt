@@ -1,33 +1,43 @@
 package com.company.Humans;
 
-import com.company.Interfaces.Buyable;
-import com.company.Places.Garage;
 import com.company.Places.Office;
 import com.company.RandomNumberGenerator;
-import com.company.Transaction;
 import com.company.Vehicles.Car;
 
 import java.util.List;
 
 
-public class CarDealer extends Human implements Buyable {
-    public List<Car> listOfCarsToBuy;
+public class CarDealer extends Human {
+    public static List<Car> listOfCarsToBuy;
 
 
-    public CarDealer(String firstName, double cash) {
+    public  CarDealer(String firstName, double cash) {
         super(cash);
-        this.firstName = firstName;
-        this.listOfCarsToBuy = RandomNumberGenerator.getRandomCarList();
     }
 
-    @Override
-    public void buy(Player buyer,double price,int carIndex) {
-        if (buyer.cash >= price) {
-            buyer.cash -= price;
+    public static void createListOfCarsAvailableForSale(){
+        if(listOfCarsToBuy == null){
+            listOfCarsToBuy = RandomNumberGenerator.getRandomCarList();
+        }
+    }
+    public static void showCarsAvailableForSale(){
+        int i = 1;
+        for (Car car : listOfCarsToBuy) {
+            System.out.println(i + ". " + car);
+            i++;
+        }
+    }
+
+
+    public static void buy(Player buyer,int carIndex ) {
+        carIndex--; //-- so car index will match with player's input
+        if (buyer.cash >= listOfCarsToBuy.get(carIndex).value) {
+            buyer.cash -= listOfCarsToBuy.get(carIndex).value;
             buyer.garage.carsOwned.add(listOfCarsToBuy.get(carIndex));
             Office.transactionBuy(listOfCarsToBuy.get(carIndex),buyer);
-            this.listOfCarsToBuy.remove(carIndex);
-            this.listOfCarsToBuy.add(RandomNumberGenerator.getRandomCar());
+            System.out.println(listOfCarsToBuy.get(carIndex) + "has been added to your garage");
+            listOfCarsToBuy.remove(carIndex);
+            listOfCarsToBuy.add(RandomNumberGenerator.getRandomCar());
         } else {
             System.out.println("Client doesn't have enough money to afford this car");
         }

@@ -9,37 +9,45 @@ import com.company.Vehicles.Car;
 public class Worker extends Human {
     public double repairChance;
     public double repairCost;
-    boolean successfulRepair;
     public Garage garage;
 
-    public Worker(String firstName, double cash, double repairCost) {
+    public Worker(String firstName, double cash, double repairCost,int repairChance) {
         super(cash);
         this.firstName = firstName;
         this.repairCost = repairCost;
-
+        this.repairChance = repairChance;
     }
 
 
-    public static Worker Janusz = new Worker("Janusz",  5000, 1);
-    public static Worker Marian = new Worker("Marian",  4500, 0.9);
-    public static Worker Adrian = new Worker("Adrian",  3000, 0.8);
+    public static Worker Janusz = new Worker("Janusz",  5000, 1000, 100);
+    public static Worker Marian = new Worker("Marian",  4500, 750,90);
+    public static Worker Adrian = new Worker("Adrian",  3000, 300,80);
 //worker's chance for repair + picking Janusz for repair if failed
-    public boolean workerRepairChance(Worker worker, Car car) {
+    public static boolean workerRepairChance(Worker worker, Car car,Player player) {
+        boolean successfulRepair = false;
         int chance = RandomNumberGenerator.getRandomValue(0, 100);
+        double fullRepairCost = 0;
         System.out.println(chance);
         if (worker == Janusz) {
             successfulRepair = true;
-            repairCost = Janusz.repairCost;
+            for (brokenPart brokenPart : car.brokenPartsList){
+                fullRepairCost += Janusz.repairCost;
+            }
+
             System.out.println("Janusz naprawia");
         }
         if (worker == Marian) {
-            if (chance <= 90) {
+            if (chance <= Marian.repairChance) {
                 successfulRepair = true;
-                repairCost = Marian.repairCost;
+                for (brokenPart brokenPart : car.brokenPartsList){
+                    fullRepairCost += Marian.repairCost;
+                }
             } else {
                 successfulRepair = false;
-                workerRepairChance(Janusz, car);
-                repairCost = Marian.repairCost + Janusz.repairCost;
+                workerRepairChance(Janusz, car,player);
+                for (brokenPart brokenPart : car.brokenPartsList){
+                    fullRepairCost += Marian.repairCost;
+                }
             }
         }
         if (worker == Adrian) {
@@ -55,34 +63,39 @@ public class Worker extends Human {
                 } else
                     System.out.println("Nie da sie bardziej popsuc auta");
             }
-            if (chance <= 80) {
+            if (chance <= Adrian.repairChance) {
                 successfulRepair = true;
-                repairCost = Adrian.repairCost;
+                for (brokenPart brokenPart : car.brokenPartsList){
+                    fullRepairCost += Adrian.repairCost;
+                }
                 System.out.println("Adrian naprawil");
             } else {
                 successfulRepair = false;
-                workerRepairChance(Janusz, car);
-                repairCost = Adrian.repairCost + Janusz.repairCost;
+                workerRepairChance(Janusz, car,player);
+                for (brokenPart brokenPart : car.brokenPartsList){
+                    fullRepairCost += Adrian.repairCost;
+                }
                 System.out.println("Adrian nie naprawil i Janusz robi za niego");
             }
         }
+        player.cash -= fullRepairCost;
         return successfulRepair;
     }
 
     //Worker Repair
-    public void workerRepair(Worker worker, Car car,Player player) {
+    public static void workerRepair(int worker, Car car,Player player) {
         if (car.brokenPartsList.size() > 0) {
-            if (worker == Janusz) {
-                if (workerRepairChance(Janusz, car))
+            if (worker == 1) {
+                if (workerRepairChance(Janusz, car,player))
                     Repair(car);
                 player.garage.carsAvailableForSale.add(car);
             }
-            if (worker == Marian) {
-                if (workerRepairChance(Marian, car))
+            if (worker == 2) {
+                if (workerRepairChance(Marian, car,player))
                     Repair(car);
                 player.garage.carsAvailableForSale.add(car);
-            } else {
-                if (workerRepairChance(Adrian, car))
+            } if (worker == 3) {
+                if (workerRepairChance(Adrian, car,player))
                     Repair(car);
                 player.garage.carsAvailableForSale.add(car);
             }
@@ -90,7 +103,7 @@ public class Worker extends Human {
             System.out.println("Powrót do garazu");
     }
     //Repair of broken parts increasing car's value for each repaired part
-    public void Repair(Car car) {
+    public static void Repair(Car car) {
         for (int i = 0; i < car.brokenPartsList.size(); i++) {
             // TO DO LIST: chance to add, i jumps to 1, (Car car, double chance)
             switch (car.brokenPartsList.get(i)) {
@@ -113,5 +126,20 @@ public class Worker extends Human {
         }
         car.brokenPartsList.clear();
 
+    }
+    public static void showWorkers(){
+        System.out.println("1. " + Worker.Janusz);
+        System.out.println("2. " + Worker.Marian);
+        System.out.println("3. " + Worker.Adrian);
+    }
+
+
+    @Override
+    public String toString() {
+        return "Worker{" +
+                "firstName: " + firstName +
+                ", repairChance: " + repairChance +
+                ", repairCost: " + repairCost +
+                '}';
     }
 }
