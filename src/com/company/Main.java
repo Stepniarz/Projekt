@@ -37,6 +37,7 @@ public class Main {
 
             } else if (choice == options[1]) {
                 CarDealer.showCarsAvailableForSale();
+                System.out.println("Pick the car you want to buy");
                 choiceOperation = in.nextInt();
                 if (choiceOperation > listOfCarsToBuy.size() && choiceOperation < 1) {
                     System.out.println("There is no car with that index");
@@ -51,7 +52,7 @@ public class Main {
                     System.out.println("Your garage is empty");
                 } else {
                     System.out.println("Choose the car to repair");
-                    System.out.println(player.garage.carsOwned);
+                    player.garage.showCarsOwned();
                     choiceOperation = in.nextInt();
                     choiceOperation--;
                     if (choiceOperation >= player.garage.carsOwned.size() || choiceOperation < 0) {
