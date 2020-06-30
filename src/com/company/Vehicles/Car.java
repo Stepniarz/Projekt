@@ -72,7 +72,7 @@ public class Car extends RandomNumberGenerator implements Saleable {
             Office.transactionSell(this, buyer);
             seller.garage.carsOwned.remove(carIndex);
             seller.garage.carsAvailableForSale.remove(carIndex);
-            System.out.println("Car washed and sold successfully");
+            System.out.println("Car washed and sold successfully. You now have: " + seller.cash);
         } else {
             System.out.println("Client doesn't have enough money to afford this car or you dont own it");
         }
