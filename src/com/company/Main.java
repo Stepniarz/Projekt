@@ -6,6 +6,7 @@ import com.company.Places.Office;
 import com.company.Vehicles.Car;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 import static com.company.Humans.CarDealer.listOfCarsToBuy;
@@ -18,6 +19,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
             CarDealer.createListOfCarsAvailableForSale();
+            List<Client> listOfClients = RandomNumberGenerator.getRandomClientList();
             int choice;
             int choiceOperation;
             //Menu display
@@ -62,19 +64,57 @@ public class Main {
                     var choiceOperation2 = in.nextInt();
                     Worker.workerRepair(choiceOperation2,player.garage.carsOwned.get(choiceOperation),player);
                 } else if (choice == options[4]) {
-                    System.out.println(menuItems[4] + " przejrzyj potencjalnych klientów");
-                } else if (choice == options[5]) {
-                    System.out.println(menuItems[5] + " sprzedaj samochód za określoną cenę potencjalnemu klientowi");
+                    int i = 1;
+                    for(Client client : listOfClients) {
+                        System.out.println(i +". " + client.toString());
+                        i++;
+                    }
+                }
+                else if (choice == options[5]) { // sprzedaj samochód za określoną cenę potencjalnemu klientowi
+                    System.out.println("Pick the car you want to sell");
+                    player.garage.showCarsAvailableForSale();
+                    choiceOperation = in.nextInt();
+                    choiceOperation--;
+                    if(choiceOperation >= player.garage.carsAvailableForSale.size() || choiceOperation < 0){
+                        System.out.println("Wrong car index");
+
+                    }else{
+                        System.out.println(player.garage.carsAvailableForSale.get(choiceOperation));
+                    }
+                    System.out.println("Choose the client you want to sell that car");
+                    int i = 1;
+                    for(Client client : listOfClients){
+                        System.out.println(i + ". " + client.toString());
+                        i++;
+                    }
+                    int choiceOperation2;
+                    do {
+                        choiceOperation2 = in.nextInt();
+                        choiceOperation2--;
+                        if (!listOfClients.get(choiceOperation2).wantedCars.contains(player.garage.carsAvailableForSale.get(choiceOperation).producer)) {
+                            System.out.println("This person is not interested in this car");
+                        } else {
+                            System.out.println("Pick a price");
+                            var chosenPrice = in.nextDouble();
+                            player.garage.carsAvailableForSale.get(choiceOperation).sell(player, listOfClients.get(choiceOperation2), chosenPrice, choiceOperation);
+                            listOfClients.add(RandomNumberGenerator.getRandomClient());
+                            listOfClients.add(RandomNumberGenerator.getRandomClient());
+                        }
+                    } while(choiceOperation2 > listOfClients.size() && choiceOperation2 < 0);
                 } else if (choice == options[6]) {
-                    System.out.println(menuItems[6] + " kup reklamę");
+                    System.out.println("Advertise your company in a local newspaper (cost: 1500)");
+                    listOfClients.addAll(Advertisement.advertisementNewspaper(player));
                 } else if (choice == options[7]) {
                     System.out.println("Your balance is: " + player.cash);
                 } else if (choice == options[8]) {
-                    System.out.println(menuItems[8] + " sprawdź historię transakcji");
+                    System.out.println("Bought cars: ");
+                    Office.showBuyTransactions();
+                    System.out.println("Sold cars: ");
+                    Office.showSellTransactions();
                 } else if (choice == options[9]) {
-                    System.out.println(menuItems[9] + " sprawdź historię napraw każdego pojazdu");
+                    Office.showRepairs();
                 } else if (choice == options[10]) {
-                    System.out.println(menuItems[10] + " sprawdź sumę kosztów napraw i mycia dla każdego z posiadanych pojazdów");
+                    System.out.println(player.moneySpentOnPrepair);
                 } else {
                     System.out.println("Wrong answer, try again");
                 }

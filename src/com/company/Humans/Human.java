@@ -11,5 +11,11 @@ public class Human {
         this.cash = cash;
     }
 
-
+    @Override
+    public String toString() {
+        return "Human{" +
+                "firstName='" + firstName + '\'' +
+                ", cash=" + cash +
+                '}';
+    }
 }

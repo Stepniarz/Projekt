@@ -2,6 +2,7 @@ package com.company.Humans;
 
 import com.company.Enums.brokenPart;
 import com.company.Places.Garage;
+import com.company.Places.Office;
 import com.company.RandomNumberGenerator;
 import com.company.Vehicles.Car;
 
@@ -82,27 +83,30 @@ public class Worker extends Human {
         return successfulRepair;
     }
 
-    //Worker Repair
+    //WorkerRepair
     public static void workerRepair(int worker, Car car,Player player) {
         if (car.brokenPartsList.size() > 0) {
             if (worker == 1) {
                 if (workerRepairChance(Janusz, car,player))
                     Repair(car);
+                Office.repairedList(car,Janusz);
                 player.garage.carsAvailableForSale.add(car);
             }
             if (worker == 2) {
                 if (workerRepairChance(Marian, car,player))
                     Repair(car);
+                Office.repairedList(car,Marian);
                 player.garage.carsAvailableForSale.add(car);
             } if (worker == 3) {
                 if (workerRepairChance(Adrian, car,player))
                     Repair(car);
+                Office.repairedList(car,Adrian);
                 player.garage.carsAvailableForSale.add(car);
             }
         } else
             System.out.println("Powrót do garazu");
     }
-    //Repair of broken parts increasing car's value for each repaired part
+    //com.company.Repair of broken parts increasing car's value for each repaired part
     public static void Repair(Car car) {
         for (int i = 0; i < car.brokenPartsList.size(); i++) {
             // TO DO LIST: chance to add, i jumps to 1, (Car car, double chance)

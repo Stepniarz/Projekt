@@ -23,7 +23,7 @@ public class Client extends Human {
         super(cash);
         this.firstName = randomName();
         this.cash = assignClientCash(randomStatus());
-        wantedCars = randomWantedProducersList();
+        this.wantedCars = randomWantedProducersList();
     }
     //assigning client cash based on his wealth
     public static double assignClientCash(clientWealth clientWealth){
@@ -39,5 +39,12 @@ public class Client extends Human {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Client{" +
+                "firstName: " + firstName +
+                ", wantedCars: " + wantedCars +
+                ", cash: " + cash + '}';
     }
+}
 

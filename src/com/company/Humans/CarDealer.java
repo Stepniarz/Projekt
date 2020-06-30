@@ -34,6 +34,8 @@ public class CarDealer extends Human {
         if (buyer.cash >= listOfCarsToBuy.get(carIndex).value) {
             buyer.cash -= listOfCarsToBuy.get(carIndex).value;
             buyer.garage.carsOwned.add(listOfCarsToBuy.get(carIndex));
+            buyer.moneySpentOnPrepair += listOfCarsToBuy.get(carIndex).value * 0.02;
+            buyer.cash -= buyer.moneySpentOnPrepair;
             Office.transactionBuy(listOfCarsToBuy.get(carIndex),buyer);
             System.out.println(listOfCarsToBuy.get(carIndex) + "has been added to your garage");
             listOfCarsToBuy.remove(carIndex);

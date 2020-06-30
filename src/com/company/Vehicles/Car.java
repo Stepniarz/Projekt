@@ -64,12 +64,15 @@ public class Car extends RandomNumberGenerator implements Saleable {
 
     @Override
     public void sell(Player seller, Human buyer, double price, int carIndex) {
-        if (seller.garage.carsOwned.contains(this) && buyer.cash >= price) {
+        if (seller.garage.carsAvailableForSale.contains(this) && buyer.cash >= price) {
+            seller.moneySpentOnPrepair += price * 0.02;
+            seller.cash -= seller.moneySpentOnPrepair;
             seller.cash += price;
             buyer.cash -= price;
             Office.transactionSell(this, buyer);
             seller.garage.carsOwned.remove(carIndex);
-
+            seller.garage.carsAvailableForSale.remove(carIndex);
+            System.out.println("Car washed and sold successfully");
         } else {
             System.out.println("Client doesn't have enough money to afford this car or you dont own it");
         }
