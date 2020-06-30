@@ -13,7 +13,7 @@ public final class Menu {
     static String[] menuItems = {"Cars available for purchase", "Buy a car", "Your cars", "Repair your car", "Client list", "Sell your car", "Advertising",
             "Account balance", "List of transactions", "List of repairs", "Money spent on preparing cars for sale", "Exit game"};
     private static Menu instance;
-    static int turnCounter;
+    static int turnCounter = 1;
 
     private Menu() {
 
@@ -27,7 +27,6 @@ public final class Menu {
     }
 
     public static void menuDisplay() {
-        turnCounter++;
         System.out.println("MAIN MENU");
         System.out.println("================================================");
         //Option and Items loop

@@ -42,6 +42,7 @@ public class Main {
                     System.out.println("There is no car with that index");
                 } else {
                     CarDealer.buy(player, choiceOperation);
+                    turnCounter++;
                 }
             } else if (choice == options[2]) {
                 System.out.println(player.garage.carsOwned);
@@ -61,6 +62,7 @@ public class Main {
                         Worker.showWorkers();
                         var choiceOperation2 = in.nextInt();
                         Worker.workerRepair(choiceOperation2, player.garage.carsOwned.get(choiceOperation), player);
+                        turnCounter++;
                     }
                 }
             } else if (choice == options[4]) {
@@ -100,6 +102,7 @@ public class Main {
                                 player.garage.carsAvailableForSale.get(choiceOperation).sell(player, listOfClients.get(choiceOperation2), chosenPrice, choiceOperation);
                                 listOfClients.add(RandomNumberGenerator.getRandomClient());
                                 listOfClients.add(RandomNumberGenerator.getRandomClient());
+                                turnCounter++;
                             }
                         } while (choiceOperation2 > listOfClients.size() && choiceOperation2 < 0);
                     }
@@ -108,6 +111,7 @@ public class Main {
             } else if (choice == options[6]) {
                 System.out.println("You advertise your company in a local newspaper (cost: 1500)");
                 listOfClients.addAll(Advertisement.advertisementNewspaper(player));
+                turnCounter++;
             } else if (choice == options[7]) {
                 System.out.println("Your balance is: " + player.cash);
             } else if (choice == options[8]) {
