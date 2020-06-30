@@ -16,8 +16,10 @@ public class Advertisement {
         List<Client> listToReturn = new ArrayList<>();
         if (player.cash >= 1500){
             player.cash -= 1500;
-        }for(int i = 0; i < RandomNumberGenerator.getRandomValue(1,8); i++){
-            listToReturn.add(RandomNumberGenerator.getRandomClient());
+            for(int i = 0; i < RandomNumberGenerator.getRandomValue(1,8); i++){
+                listToReturn.add(RandomNumberGenerator.getRandomClient());}
+        }else{
+            System.out.println("You dont have enough money for an add.");
         }
         return listToReturn;
     }

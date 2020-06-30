@@ -21,18 +21,20 @@ public class Garage {
     }
 
     public void showCarsAvailableForSale() {
-        for (Car car: carsOwned) {
-            if (car.brokenPartsList.size() == 0 ) {
+        for (Car car: carsAvailableForSale) {
+                System.out.println(car);
+            }
+        }
+
+    public void checkForNewCarsForSale(){
+        for(Car car: carsOwned){
+            if(car.brokenPartsList.size() == 0){
                 if(!carsAvailableForSale.contains(car)){
                     carsAvailableForSale.add(car);
                 }
-                System.out.println(car);
-            } else {
-                System.out.println(car + " Needs repair before selling");
             }
         }
     }
-
 
 
     //Bought cars

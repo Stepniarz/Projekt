@@ -13,7 +13,6 @@ import static com.company.RandomNumberGenerator.*;
 public class Client extends Human {
     private final clientFirstName firstName;
     public List<carProducer> wantedCars;
-    public double cash;
     Random r = new Random();
     private Set<carProducer> desiredProducer;
     private Set<brokenPart> acceptsBrokenCar;

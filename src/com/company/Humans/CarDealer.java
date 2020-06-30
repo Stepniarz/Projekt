@@ -41,7 +41,7 @@ public class CarDealer extends Human {
             listOfCarsToBuy.remove(carIndex);
             listOfCarsToBuy.add(RandomNumberGenerator.getRandomCar());
         } else {
-            System.out.println("Client doesn't have enough money to afford this car");
+            System.out.println("You don't have enough money to afford this car");
         }
     }
 }
